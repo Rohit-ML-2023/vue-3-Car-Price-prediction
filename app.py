@@ -17,8 +17,8 @@ model = pickle.load(open('car_dekho.pickle', 'rb'))
 
 @app.route("/")
 @cross_origin()
-def hello_world():
-    return "Hello,-world!"
+def helloWorld():
+    return "Hello, -world!"
 
 
 
@@ -26,46 +26,120 @@ def hello_world():
 def predwine():
 
     if request.method == 'GET':
-        
+
         try:
+
             # a = float(request.args.get('alcohol'))
-            a = request.args.get('Car_Name')
-            b = request.args.get('Car_Model')
-            c = request.args.get('Kms_Driven')
-            d = request.args.get('No_of_Years')
-            e = request.args.get('Fuel_Type')
-            f = request.args.get('Transmission')
-            g = request.args.get('Owner')
-            try:
-                    h = int(d)**2
-                    i = int(c)**2
-
-            except:
-               h= 1
-               i= 1
-           
-        except:
-            # x= 1
-            a = 1
-            b = 1
-            c = 1 
-            d = 1
-            e = 1
-            f = 1
-            g = 1
-            h = 1 
-            i= 1
-            h = float(request.args.get('No_of_Years'**2))
-            i = float(request.args.get('Kms_Driven'**2))
+            car_name =          int(request.args.get('Car_Name'))
+            model_name =        int(request.args.get('Car_Model'))
+            Kms_Driven =        int(request.args.get('Kms_Driven'))
+            Years_old =         int(request.args.get('No_of_Years'))
+            Fuel_Type =         int(request.args.get('Fuel_Type'))
+            Transmission =      int(request.args.get('Transmission'))
+            Owner =             int(request.args.get('Owner'))
+            #    try:
+            Years_old_square =  int(Years_old)**2
+            Kms_Driven_square = int(Kms_Driven)**2
     
+            if Fuel_Type  == 0:
+                Fuel_type_Petrol = 1
+                Fuel_Type_Diesel = 0
+            elif Fuel_Type  == 1:
+                Fuel_type_Petrol = 0
+                Fuel_Type_Diesel = 1
+    
+    
+            if Transmission  == 0:
+                Transmission_Manual = 1
+                Transmission_Automatic = 0
+            elif Transmission  == 1:
+                Transmission_Manual = 0
+                Transmission_Automatic = 1
+    
+    
+            if Owner == 0:
+                Owner_First = 1
+                Owner_Second = 0
+                Owner_Third_Owner = 0
+                Owner_Second_Fourth_Above = 0
+                Owner_Second_Test_Drive_Car = 0
+    
+    
+            elif Owner == 1:
+                Owner_First = 0
+                Owner_Second = 1
+                Owner_Third_Owner = 0
+                Owner_Second_Fourth_Above = 0
+                Owner_Second_Test_Drive_Car = 0
+    
+            elif Owner == 2:
+                Owner_First = 0
+                Owner_Second = 0
+                Owner_Third_Owner = 1
+                Owner_Second_Fourth_Above = 0
+                Owner_Second_Test_Drive_Car = 0
+    
+            elif Owner == 3:
+                Owner_First = 0
+                Owner_Second = 0
+                Owner_Third_Owner = 0
+                Owner_Second_Fourth_Above = 3
+                Owner_Second_Test_Drive_Car = 0
+    
+            elif Owner  == 4:
+                Owner_First = 0
+                Owner_Second = 0
+                Owner_Third_Owner = 0
+                Owner_Second_Fourth_Above = 0
+                Owner_Second_Test_Drive_Car = 1
 
-        final_features = ([[a, b, c, d, e, f, g,h,i]])
-        # final_features = [[1,45,100.00,6,36,10000,1,0,0,1,1,0,0,0,0]]
 
-        prediction = model.predict(final_features)
-        print(prediction)
+        
 
-    return jsonify(str("Class  " + str(prediction[0])))
+            
+        except:
+
+            #   Years_old_square= 0
+            #   Kms_Driven_square=0
+           
+       
+            #   car_name = 0
+            #   model_name = 0
+            #   Kms_Driven = 0
+            #   Years_old = 0
+            #   Fuel_Type = 0
+            #   Fuel_type_Petrol = 0
+            #   Fuel_Type_Diesel = 0
+            #   Transmission  = 0
+            #   Transmission_Manual = 0
+            #   Transmission_Automatic = 0
+
+            #   Owner =   0                  
+  
+            #   Owner_First = 0
+            #   Owner_Second = 0
+            #   Owner_Third_Owner = 0
+            #   Owner_Second_Fourth_Above = 0
+            #   Owner_Second_Test_Drive_Car = 0
+
+              return jsonify(str("No Input  " ))
+
+        
+
+
+
+
+    final_features = ([[car_name, model_name, Kms_Driven, Years_old,Years_old_square, Kms_Driven_square ,Fuel_type_Petrol,Fuel_Type_Diesel, Transmission_Manual,Transmission_Automatic ,Owner_First,Owner_Second_Fourth_Above,Owner_Second,Owner_Second_Test_Drive_Car,Owner_Third_Owner]])
+    # final_features = [[1,45,100.00,6,36,10000,1,0,0,1,1,0,0,0,0]]
+
+    prediction = model.predict(final_features)
+    car_x = prediction
+    
+    car_x= list(map(lambda car_x :str(car_x) + ' Lacs only',car_x.round(2)))
+    # prediction =("{:.2f}".format(prediction))
+    print(car_x)
+
+    return jsonify(str("Price  " + str(car_x[0])))
 
 
 #  main thread of execution to start the server
