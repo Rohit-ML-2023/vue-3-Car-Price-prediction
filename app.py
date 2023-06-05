@@ -17,8 +17,8 @@ model = pickle.load(open('car_dekho.pickle', 'rb'))
 
 @app.route("/")
 @cross_origin()
-def helloWorld():
-    return "Hello, -world!"
+def hello_world():
+    return "Hello,-world!"
 
 
 
@@ -26,24 +26,23 @@ def helloWorld():
 def predwine():
 
     if request.method == 'GET':
-
+        
         try:
-
             # a = float(request.args.get('alcohol'))
-           a = request.args.get('Car_Name')
-           b = request.args.get('Car_Model')
-           c = request.args.get('Kms_Driven')
-           d = request.args.get('No_of_Years')
-           e = request.args.get('Fuel_Type')
-           f = request.args.get('Transmission')
-           g = request.args.get('Owner')
-           try:
-            h = int(d)**2
-            i = int(c)**2
-            
-           except:
-              h= 1
-              i= 1
+            a = request.args.get('Car_Name')
+            b = request.args.get('Car_Model')
+            c = request.args.get('Kms_Driven')
+            d = request.args.get('No_of_Years')
+            e = request.args.get('Fuel_Type')
+            f = request.args.get('Transmission')
+            g = request.args.get('Owner')
+            try:
+                    h = int(d)**2
+                    i = int(c)**2
+
+            except:
+               h= 1
+               i= 1
            
         except:
             # x= 1
@@ -56,13 +55,12 @@ def predwine():
             g = 1
             h = 1 
             i= 1
+            h = float(request.args.get('No_of_Years'**2))
+            i = float(request.args.get('Kms_Driven'**2))
+    
 
-        # h = float(request.args.get('No_of_Years'**2))
-        # i = float(request.args.get('Kms_Driven'**2))
-  
-
-        # final_features = ([[a, b, c, d, e, f, g,h,i]])
-        final_features = [[1,45,100.00,6,36,10000,1,0,0,1,1,0,0,0,0]]
+        final_features = ([[a, b, c, d, e, f, g,h,i]])
+        # final_features = [[1,45,100.00,6,36,10000,1,0,0,1,1,0,0,0,0]]
 
         prediction = model.predict(final_features)
         print(prediction)
