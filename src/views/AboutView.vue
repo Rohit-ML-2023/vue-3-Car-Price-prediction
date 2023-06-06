@@ -313,7 +313,7 @@
 
 <script>
 import "./style.css";
-import { getAPI } from "@/axios";
+// import { getAPI } from "@/axios";
 export default {
   name: "ModelView",
   data() {

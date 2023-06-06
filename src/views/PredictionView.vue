@@ -363,7 +363,7 @@
 </template>
 
 <script>
-import { getAPI } from "@/axios";
+// import { getAPI } from "@/axios";
 export default {
   name: "PostsHome",
   data() {
